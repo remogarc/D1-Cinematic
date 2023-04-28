@@ -58,6 +58,7 @@
             preload(){
                 this.load.image("title", "title.png");
                 this.load.image("cursor", "cursor.png");
+                this.load.audio("stars", "stars.wav");
                 this.load.audio("woosh", "woosh.wav");
             }
             create(){
@@ -81,6 +82,10 @@
                 let c8 = this.add.circle(497, 365, 14, 0xffffff);
                 let f8 = this.add.circle(497, 365, 14, 0x000000);
 
+                this.stars = this.sound.add("stars");
+                this.time.delayedCall(800, () => {
+                    this.stars.play();
+                })
                 this.add.tween({
                     targets: f1,
                     alpha: {from: 1, to: 0.2},
@@ -109,11 +114,15 @@
                     duration: 500,
                 })
 
+                this.woosh = this.sound.add("woosh");
                 this.add.tween({
                     targets: [c1,f1,c2,f2,c3,f3,c4,f4,c5,f5,c6,f6,c7,f7,c8,f8],
                     y:-300,
                     delay: 2700,
                     duration: 400,
+                })
+                this.time.delayedCall(2750, () => {
+                    this.woosh.play();
                 })
 
                 this.add.tween({
@@ -155,17 +164,14 @@
                     x: 180,
                     duration: 200,
                 })
-                var woosh = this.sound.add('woosh');
-                // this.time.delayedCall(3290, () => {
-                //     this.woosh.play('woosh');
-                // })
+                
             }
         }
 
         new Phaser.Game({
             width: 640,
             height: 480,
-            scene: [Title]// [Studio, Loading, Title],
+            scene: [Studio, Loading, Title],
         });
     </script>
 </head>
