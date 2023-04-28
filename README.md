@@ -3,7 +3,7 @@
 # Spring 2023
 # D1-Cinematic
 
-# Key Requirements for Assignment:
+## Key Requirements for Assignment:
 
 - **3+ scenes**: The project has three separate scenes: the name of the
 studio, the loading screen, and the title of the game.
