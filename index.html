@@ -28,9 +28,26 @@
             constructor(){
                 super('loading');
             }
+            preload(){
+                this.load.image("planet", "planet.png");
+            }
             create(){
                 this.cameras.main.backgroundColor = Phaser.Display.Color.HexStringToColor("#000000");
-                this.add.text(640/2,480/2,'hi', {color: '#ffffff'});
+                this.cameras.main.fadeIn(100, 0,0,0);
+                let planet = this.add.image(570, 410, 'planet')
+                planet.setScale(0.165)
+                this.add.tween({
+                    targets: planet,
+                    rotation: 6.28,
+                    duration: 3000,
+                    repeat: -1,
+                });
+                this.time.delayedCall(5500, () => {
+                    this.cameras.main.fadeOut(200, 0,0,0);
+                    this.time.delayedCall(250, () => {
+                        this.scene.start('title');
+                    })
+                })
             }
         }
 
@@ -38,15 +55,117 @@
             constructor(){
                 super('title');
             }
+            preload(){
+                this.load.image("title", "title.png");
+                this.load.image("cursor", "cursor.png");
+                this.load.audio("woosh", "woosh.wav");
+            }
             create(){
+                let backcolor = this.add.rectangle(0, 0, 1280, 960, 0x211857);
+                let backcolor1 = this.add.rectangle(0, 0, 1280, 960, 0x000000);
+
+                let c1 = this.add.circle(226, 150, 12, 0xffffff);
+                let f1 = this.add.circle(226, 150, 12, 0x000000);
+                let c2 = this.add.circle(415, 182, 17, 0xffffff);
+                let f2 = this.add.circle(415, 182, 17, 0x000000);
+                let c3 = this.add.circle(293, 280, 14, 0xffffff);
+                let f3 = this.add.circle(293, 280, 14, 0x000000);
+                let c4 = this.add.circle(527, 80, 19, 0xffffff);
+                let f4 = this.add.circle(527, 80, 19, 0x000000);
+                let c5 = this.add.circle(80, 168, 15, 0xffffff);
+                let f5 = this.add.circle(80, 168, 15, 0x000000);
+                let c6 = this.add.circle(160, 70, 14, 0xffffff);
+                let f6 = this.add.circle(160, 70, 14, 0x000000);
+                let c7 = this.add.circle(115, 350, 16, 0xffffff);
+                let f7 = this.add.circle(115, 350, 16, 0x000000);
+                let c8 = this.add.circle(497, 365, 14, 0xffffff);
+                let f8 = this.add.circle(497, 365, 14, 0x000000);
+
+                this.add.tween({
+                    targets: f1,
+                    alpha: {from: 1, to: 0.2},
+                    delay: 800,
+                    duration: 500,
+                })
+
+                this.add.tween({
+                    targets: [f4, f8],
+                    alpha: {from: 1, to: 0.2},
+                    delay: 1000,
+                    duration: 500,
+                })
+
+                this.add.tween({
+                    targets: [f3, f5],
+                    alpha: {from: 1, to: 0.2},
+                    delay: 1200,
+                    duration: 500,
+                })
+
+                this.add.tween({
+                    targets: [f2, f7, f6],
+                    alpha: {from: 1, to: 0.2},
+                    delay: 1400,
+                    duration: 500,
+                })
+
+                this.add.tween({
+                    targets: [c1,f1,c2,f2,c3,f3,c4,f4,c5,f5,c6,f6,c7,f7,c8,f8],
+                    y:-300,
+                    delay: 2700,
+                    duration: 400,
+                })
+
+                this.add.tween({
+                    targets: backcolor1,
+                    delay: 1900,
+                    alpha: {from: 1, to: 0},
+                    duration: 500,
+                })
+
+                let start = this.add.text(30, 520, 'Start', {fontFamily: 'Impact', fontSize: 60, color: '#ffffff'});
+                let others = this.add.text(30, 620, 'Options\n\nCredits\n\nQuit', {fontFamily: 'Impact', fontSize: 40, color: '#ffffff'});
+                let title = this.add.image(1065, 180, 'title')
+                title.setScale(0.32)
+                let cursor = this.add.image(820, 115, 'cursor')
+                cursor.setScale(0.1)
                 
+
+                this.add.tween({
+                    targets: start,
+                    delay: 2900,
+                    y: 80,
+                    duration: 400,
+                })
+                this.add.tween({
+                    targets: others,
+                    delay: 2900,
+                    y: 180,
+                    duration: 400,
+                })
+                this.add.tween({
+                    targets: title,
+                    delay: 2900,
+                    x: 425,
+                    duration: 400,
+                })
+                this.add.tween({
+                    targets: cursor,
+                    delay: 3290,
+                    x: 180,
+                    duration: 200,
+                })
+                var woosh = this.sound.add('woosh');
+                // this.time.delayedCall(3290, () => {
+                //     this.woosh.play('woosh');
+                // })
             }
         }
 
         new Phaser.Game({
             width: 640,
             height: 480,
-            scene: [Studio, Loading, Title],
+            scene: [Title]// [Studio, Loading, Title],
         });
     </script>
 </head>
